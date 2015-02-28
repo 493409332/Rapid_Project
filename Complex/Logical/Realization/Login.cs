@@ -15,7 +15,7 @@ namespace Complex.Logical.Realization
     public class Login : EFRepositoryBase<test2>, ILogin
     {
         public Login() {
-            ChangeDatabase("MySQLContext");
+            ChangeDatabase("MySqlCompact");
         }
         int ii = 1;
         //[Start]
@@ -29,13 +29,13 @@ namespace Complex.Logical.Realization
 
         #region ILogin 成员
 
-        
-         
+
+         [Start1]
         public bool IsLogin(test2 model, int aa, decimal bb, object cc, float aaa)
      //   public bool IsLogin(test2 model, int aa)
         {
             Insert(model);
-            Update(model);
+            //Update(model);
             ii = aa;
            // Insert(model);
             return false;
