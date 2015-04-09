@@ -57,9 +57,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\MongoDB.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI, Version=1.2.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+    <Reference Include="NPOI, Version=2.1.3.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Oracle\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Oracle\EF6\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -205,6 +213,8 @@
     <Content Include="DLL\MongoDB.pdb" />
     <Content Include="DLL\MongoDB.xml" />
     <Content Include="DLL\NPOI.dll" />
+    <Content Include="DLL\Oracle\EF6\Oracle.ManagedDataAccess.EntityFramework.dll" />
+    <Content Include="DLL\Oracle\Oracle.ManagedDataAccess.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Teechart\" />
@@ -213,7 +223,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

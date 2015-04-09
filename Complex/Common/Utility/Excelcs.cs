@@ -13,8 +13,8 @@ namespace Complex.Common.Utility
         public static MemoryStream getExcel(DataTable dt, HttpContextBase content)
         {
             var book = new HSSFWorkbook();
-            Sheet sheet = book.CreateSheet("Sheet1");
-            Row row = sheet.CreateRow(0);
+            ISheet sheet = book.CreateSheet("Sheet1");
+            IRow row = sheet.CreateRow(0);
             for (int i = 0; i < dt.Columns.Count; i++)
             {
                 row.CreateCell(i).SetCellValue(dt.Columns[i].ColumnName);
@@ -22,7 +22,7 @@ namespace Complex.Common.Utility
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                Row row2 = sheet.CreateRow(i + 1);
+                IRow row2 = sheet.CreateRow(i + 1);
                 for (int j = 0; j < dt.Columns.Count; j++)
                     row2.CreateCell(j).SetCellValue(dt.Rows[i][j].ToString());
             }

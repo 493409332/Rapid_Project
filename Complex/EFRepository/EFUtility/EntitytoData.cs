@@ -11,7 +11,7 @@ namespace Complex.Repository.Utility
 {
     public class EntitytoData : DbContext
     {
-        public EntitytoData() : base("MySqlCompact") { }
+        public EntitytoData() : base("OraString") { }
         public EntitytoData(string p):base(p){ }
         public static EntitytoData Init(string connectionstring)
         {
@@ -77,7 +77,7 @@ namespace Complex.Repository.Utility
         {  
             //去除数据库表复数约定
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.PluralizingTableNameConvention>();
-            
+            modelBuilder.HasDefaultSchema("ASS");
             //Entity Framework中DbContext首次加载OnModelCreating会检查__MigrationHistory表，
             //作为使用Code Frist编程模式，而实际先有数据库时，这种检测就是多余的了，所以需要屏蔽，
             //在EF 4.1之前可以使用在OnModelCreating函数总加入下面语句来屏蔽这种检测：

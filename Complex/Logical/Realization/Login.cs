@@ -15,7 +15,7 @@ namespace Complex.Logical.Realization
     public class Login : EFRepositoryBase<test2>, ILogin
     {
         public Login() {
-            ChangeDatabase("MySqlCompact");
+            ChangeDatabase("OraString");
         }
         int ii = 1;
         //[Start]
@@ -31,10 +31,14 @@ namespace Complex.Logical.Realization
 
 
          [Start1]
+        [Ex]
         public bool IsLogin(test2 model, int aa, decimal bb, object cc, float aaa)
      //   public bool IsLogin(test2 model, int aa)
         {
             Insert(model);
+
+            throw new ArgumentOutOfRangeException("不存在的月份"); 
+            var quer = EF.test2.AsNoTracking().ToList();
             //Update(model);
             ii = aa;
            // Insert(model);

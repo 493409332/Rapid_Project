@@ -445,7 +445,13 @@ namespace MtAop.Factory
             generator.Emit(OpCodes.Ldloc, contextLocal);
             generator.Emit(OpCodes.Callvirt, typeof(AspectAttribute).GetMethod("Action", new Type[] { typeof(InvokeContext) }));
             generator.Emit(OpCodes.Stloc, contextLocal);
+
+            generator.Emit(OpCodes.Leave_S, castRetSuccess);
+
             generator.MarkLabel(castExSuccess);
+
+            generator.Emit(OpCodes.Ldloc, exceptionLocal);
+            generator.Emit(OpCodes.Throw);
 
             #endregion
 
@@ -454,6 +460,8 @@ namespace MtAop.Factory
             generator.EndExceptionBlock();
 
             #endregion
+            
+            generator.MarkLabel(castRetSuccess); 
 
             if (typeof(void) != returnType)
             {
@@ -461,7 +469,7 @@ namespace MtAop.Factory
             } 
            
  
-            generator.MarkLabel(castRetSuccess); 
+          
             generator.Emit(OpCodes.Ret);
         }
     }
