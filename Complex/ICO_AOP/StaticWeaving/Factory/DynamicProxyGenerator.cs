@@ -27,17 +27,35 @@ namespace MtAop.Factory
         private ModuleBuilder _moduleBuilder;
         private TypeBuilder _typeBuilder;
         private FieldBuilder _realProxyField;
+
+       // private FieldBuilder _dbContextTransaction;
+        /// <summary>
+        /// 父类类型
+        /// </summary>
+     //   public Type _baseType=null;
+        /// <summary>
+        /// 是否开启事务
+        /// </summary>
+        bool TransactionEnable;
         /// <summary>
         /// 构造
         /// </summary>
         /// <param name="realProxyType"></param>
         /// <param name="interfaceType"></param>
-        public DynamicProxyGenerator(Type realProxyType, Type interfaceType)
+        public DynamicProxyGenerator(Type realProxyType, Type interfaceType, bool transactionEnable = false)
         {
             _realProxyType = realProxyType;
             _interfaceType = interfaceType;
-        }
 
+            TransactionEnable = transactionEnable;
+          //  if ( baseType != null )
+               // this._baseType = baseType; 
+        }
+#warning 等待事务升级
+        //System.Data.Entity.DbContextTransaction Dt;
+        //Dt = EF.Database.BeginTransaction();
+        //Dt.Commit();
+        //Dt.Rollback();
 
         public Type GenerateType()
         {
@@ -82,12 +100,21 @@ namespace MtAop.Factory
             _typeBuilder = _moduleBuilder.DefineType(string.Format(TypeNameFormat, _realProxyType.Name),
                 TypeAttributes.Public | TypeAttributes.Sealed);
             _typeBuilder.AddInterfaceImplementation(_interfaceType);
+
+            //if ( _baseType!=null)
+            //    _typeBuilder.SetParent(_baseType);
+         
         }
         // 构造字段
         void BuildField()
         {
             _realProxyField = _typeBuilder.DefineField("_realProxy", _realProxyType, FieldAttributes.Private);
             _realProxyField.SetConstant(null);
+            //if ( _baseType!=null )
+            //{
+            //    _dbContextTransaction = _typeBuilder.DefineField("_dbContextTransaction", typeof(System.Data.Entity.DbContextTransaction), FieldAttributes.Private);
+            //    _dbContextTransaction.SetConstant(null);
+            //}
         }
 
         // 构造函数
@@ -97,11 +124,19 @@ namespace MtAop.Factory
                 CallingConventions.HasThis, null);
             ILGenerator generator = constructorBuilder.GetILGenerator();
 
-            // _realProxy = new RealProxy();
+
+
             generator.Emit(OpCodes.Ldarg_0);
+
+            // _realProxy = new RealProxy();
+       
             ConstructorInfo defaultConstructorInfo = _realProxyType.GetConstructor(Type.EmptyTypes);
             generator.Emit(OpCodes.Newobj, defaultConstructorInfo);
             generator.Emit(OpCodes.Stfld, _realProxyField);
+
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.Emit(OpCodes.Call, _typeBuilder.BaseType.GetConstructors()[0]);
+            generator.Emit(OpCodes.Nop); generator.Emit(OpCodes.Nop);
 
             generator.Emit(OpCodes.Ret);
         }
@@ -126,6 +161,7 @@ namespace MtAop.Factory
         /// <param name="methodInfo"></param>
         void BuildMethod(MethodInfo methodInfo)
         {
+
             string methodName = methodInfo.Name;
             
             ParameterInfo[] parameterInfos = methodInfo.GetParameters();
@@ -142,6 +178,49 @@ namespace MtAop.Factory
             Label castPostSuccess = generator.DefineLabel();
             Label castExSuccess = generator.DefineLabel();
             Label castRetSuccess = generator.DefineLabel();
+
+
+            #region 事务实例化
+
+
+            if ( TransactionEnable )
+            {
+                  generator.Emit(OpCodes.Ldarg_0);
+                  generator.Emit(OpCodes.Ldfld, _realProxyField);
+                  MethodInfo openTransaction = this._realProxyType.GetMethod("OpenTransaction", new Type[] { }, null);
+                  generator.Emit(OpCodes.Callvirt, openTransaction);
+ 
+
+            }
+
+
+            //if ( _baseType != null )
+            //{
+                 
+            //    generator.Emit(OpCodes.Ldarg_0);
+            //    generator.Emit(OpCodes.Ldstr, "OraString");
+            //    MethodInfo oraString = this._baseType.GetMethod("ChangeDatabase", new Type[] { typeof(string) }, null);
+
+            //    generator.Emit(OpCodes.Call, oraString);
+               
+            //     generator.Emit(OpCodes.Ldarg_0);
+            //    generator.Emit(OpCodes.Ldarg_0);
+ 
+            //    generator.Emit(OpCodes.Ldfld, _typeBuilder.BaseType.GetField("EF"));
+
+            //    PropertyInfo efDatabase = typeof(System.Data.Entity.DbContext).GetProperty("Database");
+
+            //    generator.Emit(OpCodes.Callvirt, efDatabase.GetMethod);
+
+            //    MethodInfo beginTransaction = typeof(System.Data.Entity.Database).GetMethod("BeginTransaction", new Type[] { }, null);
+            //    generator.Emit(OpCodes.Callvirt, beginTransaction);
+            //    generator.Emit(OpCodes.Stfld, _dbContextTransaction);
+             
+            //}
+
+
+            #endregion
+
             #region 实例化 InvokeContext
 
             Type contextType = typeof(InvokeContext);
@@ -157,7 +236,7 @@ namespace MtAop.Factory
 
             #endregion
 
-                #region 声明  result 初始化
+            #region 声明  result 初始化
 
             LocalBuilder resultLocal = null;
 
@@ -416,6 +495,25 @@ namespace MtAop.Factory
             #region Catch Block 出现异常处理块
 
             generator.BeginCatchBlock(typeof(Exception));
+
+
+            if ( TransactionEnable )
+            {
+                generator.Emit(OpCodes.Ldarg_0);
+                generator.Emit(OpCodes.Ldfld, _realProxyField);
+                MethodInfo openTransaction = this._realProxyType.GetMethod("Rollback", new Type[] { }, null);
+                generator.Emit(OpCodes.Callvirt, openTransaction);
+            }
+
+            //if ( _baseType != null )
+            //{
+            //    generator.Emit(OpCodes.Ldarg_0);  //this
+            //    generator.Emit(OpCodes.Ldfld, _dbContextTransaction);
+            //    MethodInfo rollbackTransaction = typeof(System.Data.Entity.DbContextTransaction).GetMethod("Rollback", new Type[] { }, null);
+            //    generator.Emit(OpCodes.Callvirt, rollbackTransaction);
+
+            //}
+
             //e = exception1;
             //context.SetError(e); 
             generator.Emit(OpCodes.Stloc, exceptionLocal);
@@ -446,12 +544,17 @@ namespace MtAop.Factory
             generator.Emit(OpCodes.Callvirt, typeof(AspectAttribute).GetMethod("Action", new Type[] { typeof(InvokeContext) }));
             generator.Emit(OpCodes.Stloc, contextLocal);
 
+        
             generator.Emit(OpCodes.Leave_S, castRetSuccess);
 
             generator.MarkLabel(castExSuccess);
 
+      
+
+
             generator.Emit(OpCodes.Ldloc, exceptionLocal);
             generator.Emit(OpCodes.Throw);
+
 
             #endregion
 
@@ -461,7 +564,22 @@ namespace MtAop.Factory
 
             #endregion
             
-            generator.MarkLabel(castRetSuccess); 
+            generator.MarkLabel(castRetSuccess);
+            //if ( _baseType != null )
+            //{
+            //    generator.Emit(OpCodes.Ldarg_0);
+            //    generator.Emit(OpCodes.Ldfld, _dbContextTransaction);
+            //    MethodInfo commitTransaction = typeof(System.Data.Entity.DbContextTransaction).GetMethod("Commit", new Type[] { }, null);
+            //    generator.Emit(OpCodes.Callvirt, commitTransaction);
+            //}
+
+            if ( TransactionEnable )
+            {
+                generator.Emit(OpCodes.Ldarg_0);
+                generator.Emit(OpCodes.Ldfld, _realProxyField);
+                MethodInfo openTransaction = this._realProxyType.GetMethod("Commit", new Type[] { }, null);
+                generator.Emit(OpCodes.Callvirt, openTransaction);  
+            }
 
             if (typeof(void) != returnType)
             {

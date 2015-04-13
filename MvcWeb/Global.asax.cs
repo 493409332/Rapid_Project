@@ -1,4 +1,4 @@
-﻿using Complex.ICO.Utility.Factory;
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Complex.ICO_AOP.Utility.Factory;
 
 namespace MvcWeb
 {
@@ -27,9 +28,9 @@ namespace MvcWeb
             // setCongrollerFactory则是用MyDependencyMvcControllerFactory替代默认Controller工厂
 
             DependencyFactory.RegisterDependency();
-
+            //ICO MVC注册 
             ControllerBuilder.Current.SetControllerFactory(new DependencyMvcControllerFactory());
-
+            //ICO API注册
             GlobalConfiguration.Configuration.DependencyResolver = new IoCContainer(DependencyUnityContainer.Current); 
             //var builder = new ContainerBuilder();
             //var data = Assembly.Load("Service");

@@ -22,7 +22,7 @@ namespace MvcWeb.Controllers
         // GET api/default1/5
         public string Get(int id)
         {
-          //  Login.IsLogin(new test2());
+            bool aaa11 = Login.IsLogin(new test2() { ID = 1, Name = "aaaaaaa", Num = 1, test3 = new test3() { Name1 = "aaaaaaaaaa", Num1 = 1 } }, 11, 1.11m, 111, 1.1123f);
             return "value";
         }
 

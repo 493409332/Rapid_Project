@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Complex.ICO.Utility
+namespace Complex.ICO_AOP.Utility
 {
  
     #region 建议采用第一个

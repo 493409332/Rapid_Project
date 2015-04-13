@@ -13,7 +13,7 @@ namespace Complex.Repository
     public abstract class EFRepositoryBase<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
-       
+        private DbContextTransaction _dbContextTransaction = null;
         public EntitytoData EF ;
       
          public EFRepositoryBase()
@@ -32,7 +32,18 @@ namespace Complex.Repository
         {
             get { return EF.Set<TEntity>(); }
         }
-       
+        public void OpenTransaction()
+        { 
+           this._dbContextTransaction = EF.Database.BeginTransaction();
+        }
+        public void Commit()
+        {
+            this._dbContextTransaction.Commit(); 
+        }
+        public void Rollback()
+        {
+            this._dbContextTransaction.Rollback();
+        }
         public int Insert(TEntity entity)
         { 
             Entities.Add(entity);

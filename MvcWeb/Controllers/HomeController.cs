@@ -1,5 +1,5 @@
 ﻿using Complex.Entity;
-using Complex.ICO.Utility.Factory;
+ 
 using Complex.Logical.ILogical;
 using Complex.Repository.Utility;
 using Microsoft.Practices.Unity;
@@ -25,7 +25,7 @@ namespace MvcWeb.Controllers
       //  DependencyUnityContainer
         public ActionResult Index()
         {
-          bool aaa11 = Login.IsLogin(new test2() { ID = 1, Name = "12", Num = 1, test3 = new test3() { Name1 = "123", Num1 = 1 } }, 11, 1.11m, 111, 1.1123f);
+          bool aaa11 = Login.IsLogin(new test2() { ID = 1, Name = "aaaaaaa", Num = 1, test3 = new test3() { Name1 = "aaaaaaaaaa", Num1 = 1 } }, 11, 1.11m, 111, 1.1123f);
           //  bool aa = Login.IsLogin(new test2() { ID = 1, Name = "12", Num = 1, test3 = new test3() { Name1 = "123", Num1 = 1 } }, 212);
        //     bool aa1 = Login1.IsLogin(new test2());
 

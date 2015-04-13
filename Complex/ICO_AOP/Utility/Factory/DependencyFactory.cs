@@ -11,8 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+ 
 
-namespace Complex.ICO.Utility.Factory
+namespace Complex.ICO_AOP.Utility.Factory
 {
     //创建一个容器的单例
     public static class DependencyUnityContainer
@@ -115,80 +116,139 @@ namespace Complex.ICO.Utility.Factory
             //注册ITransientLifetimeManagerRegister类型
             foreach (var t in ITransientLifetimeManagerRegisterls)
             {
-                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICOEnableAttribute), false)!=null && ((ICOEnableAttribute)tt.GetCustomAttribute(typeof(ICOEnableAttribute), false)).Enable, typeof(ITransientLifetimeManagerRegister));
+                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false)!=null && ((ICO_AOPEnableAttribute)tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false)).ICOEnable, typeof(ITransientLifetimeManagerRegister));
                 foreach (var iType in implementInterfaceList)
-                { 
+                {
 
-                    DescriptionAttribute ds = (DescriptionAttribute)t.GetCustomAttribute(typeof(DescriptionAttribute), false);
+                    ICOConfigAttribute ds = (ICOConfigAttribute) t.GetCustomAttribute(typeof(ICOConfigAttribute), false);
+                    ICO_AOPEnableAttribute ia = (ICO_AOPEnableAttribute) iType.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false);
 
-                       var generator = new DynamicProxyGenerator(t, iType);
-                    Type type = generator.GenerateType();
+                    if ( ia.AOPEnable )
+                    {
+                        var generator = new DynamicProxyGenerator(t, iType,ds.TransactionEnable);
+                        Type type = generator.GenerateType();
+                        DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
+                    }
+                    else
+                    { 
+                        DependencyUnityContainer.Current.RegisterType(iType, t, ds.Description, new TransientLifetimeManager());
+                    }
+                  
             
-                     DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
+                  
                     #warning 加个判断是否有AOP切片类特性，有则动态生成否则直接注册
                 }
             } 
             //注册IContainerControlledLifetimeManagerRegister类型
             foreach (var t in IContainerControlledLifetimeManagerRegisterls)
             {
-                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICOEnableAttribute), false) != null && ((ICOEnableAttribute)tt.GetCustomAttribute(typeof(ICOEnableAttribute), false)).Enable, typeof(IContainerControlledLifetimeManagerRegister));
+                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) != null && ( (ICO_AOPEnableAttribute) tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) ).ICOEnable, typeof(IContainerControlledLifetimeManagerRegister));
                 foreach (var iType in implementInterfaceList)
                 {
-                    DescriptionAttribute ds = (DescriptionAttribute)t.GetCustomAttribute(typeof(DescriptionAttribute), false);
+                    ICOConfigAttribute ds = (ICOConfigAttribute) t.GetCustomAttribute(typeof(ICOConfigAttribute), false);
+                    ICO_AOPEnableAttribute ia = (ICO_AOPEnableAttribute) iType.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false);
 
-                       var generator = new DynamicProxyGenerator(t, iType);
-                    Type type = generator.GenerateType();
-                    DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new ContainerControlledLifetimeManager());
+                    if ( ia.AOPEnable )
+                    {
+                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        Type type = generator.GenerateType();
+                        DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
+                    }
+                    else
+                    {
+                        
+                        DependencyUnityContainer.Current.RegisterType(iType, t, ds.Description, new TransientLifetimeManager());
+                    }
                 }
             }
 
             //注册IHierarchicalLifetimeManagerRegister类型
             foreach (var t in IHierarchicalLifetimeManagerRegisterls)
             {
-                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICOEnableAttribute), false) != null && ((ICOEnableAttribute)tt.GetCustomAttribute(typeof(ICOEnableAttribute), false)).Enable, typeof(IHierarchicalLifetimeManagerRegister));
+                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) != null && ( (ICO_AOPEnableAttribute) tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) ).ICOEnable, typeof(IHierarchicalLifetimeManagerRegister));
                 foreach (var iType in implementInterfaceList)
                 {
-                    DescriptionAttribute ds = (DescriptionAttribute)t.GetCustomAttribute(typeof(DescriptionAttribute), false);
-                       var generator = new DynamicProxyGenerator(t, iType);
-                    Type type = generator.GenerateType();
-                    DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new HierarchicalLifetimeManager());
+                    ICOConfigAttribute ds = (ICOConfigAttribute) t.GetCustomAttribute(typeof(ICOConfigAttribute), false);
+                    ICO_AOPEnableAttribute ia = (ICO_AOPEnableAttribute) iType.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false);
+
+                    if ( ia.AOPEnable )
+                    {
+                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        Type type = generator.GenerateType();
+                        DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
+                    }
+                    else
+                    {
+                        
+                        DependencyUnityContainer.Current.RegisterType(iType, t, ds.Description, new TransientLifetimeManager());
+                    }
                 }
             }
 
             //注册IExternallyControlledLifetimeManagerRegister类型
             foreach (var t in IExternallyControlledLifetimeManagerRegisterls)
             {
-                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICOEnableAttribute), false) != null && ((ICOEnableAttribute)tt.GetCustomAttribute(typeof(ICOEnableAttribute), false)).Enable, typeof(IExternallyControlledLifetimeManagerRegister));
+                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) != null && ( (ICO_AOPEnableAttribute) tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) ).ICOEnable, typeof(IExternallyControlledLifetimeManagerRegister));
                 foreach (var iType in implementInterfaceList)
                 {
-                    DescriptionAttribute ds = (DescriptionAttribute)t.GetCustomAttribute(typeof(DescriptionAttribute), false);
-                       var generator = new DynamicProxyGenerator(t, iType);
-                    Type type = generator.GenerateType();
-                    DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new ExternallyControlledLifetimeManager());
+                    ICOConfigAttribute ds = (ICOConfigAttribute) t.GetCustomAttribute(typeof(ICOConfigAttribute), false);
+                    ICO_AOPEnableAttribute ia = (ICO_AOPEnableAttribute) iType.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false);
+
+                    if ( ia.AOPEnable )
+                    {
+                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        Type type = generator.GenerateType();
+                        DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
+                    }
+                    else
+                    {
+                       
+                        DependencyUnityContainer.Current.RegisterType(iType, t, ds.Description, new TransientLifetimeManager());
+                    }
                 }
             }
             //注册IPerThreadLifetimeManagerRegister类型
             foreach (var t in IPerThreadLifetimeManagerRegisterls)
             {
-                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICOEnableAttribute), false) != null && ((ICOEnableAttribute)tt.GetCustomAttribute(typeof(ICOEnableAttribute), false)).Enable, typeof(IPerThreadLifetimeManagerRegister));
+                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) != null && ( (ICO_AOPEnableAttribute) tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) ).ICOEnable, typeof(IPerThreadLifetimeManagerRegister));
                 foreach (var iType in implementInterfaceList)
                 {
-                    DescriptionAttribute ds = (DescriptionAttribute)t.GetCustomAttribute(typeof(DescriptionAttribute), false);
-                    var generator = new DynamicProxyGenerator(t, iType);
-                    Type type = generator.GenerateType();
-                    DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new PerThreadLifetimeManager());
+                    ICOConfigAttribute ds = (ICOConfigAttribute) t.GetCustomAttribute(typeof(ICOConfigAttribute), false);
+                    ICO_AOPEnableAttribute ia = (ICO_AOPEnableAttribute) iType.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false);
+
+                    if ( ia.AOPEnable )
+                    {
+                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        Type type = generator.GenerateType();
+                        DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
+                    }
+                    else
+                    {
+                       
+                        DependencyUnityContainer.Current.RegisterType(iType, t, ds.Description, new TransientLifetimeManager());
+                    }
                 }
             }
             //注册IPerResolveLifetimeManagerRegister类型
             foreach (var t in IPerResolveLifetimeManagerRegisterls)
             {
-                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICOEnableAttribute), false) != null && ((ICOEnableAttribute)tt.GetCustomAttribute(typeof(ICOEnableAttribute), false)).Enable, typeof(IPerResolveLifetimeManagerRegister));
+                var implementInterfaceList = t.FindInterfaces((tt, o) => !o.Equals(tt) && tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) != null && ( (ICO_AOPEnableAttribute) tt.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false) ).ICOEnable, typeof(IPerResolveLifetimeManagerRegister));
                 foreach (var iType in implementInterfaceList)
                 {
-                    DescriptionAttribute ds = (DescriptionAttribute)t.GetCustomAttribute(typeof(DescriptionAttribute), false);
-                       var generator = new DynamicProxyGenerator(t, iType);
-                    Type type = generator.GenerateType();
-                    DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new PerResolveLifetimeManager());
+                    ICOConfigAttribute ds = (ICOConfigAttribute) t.GetCustomAttribute(typeof(ICOConfigAttribute), false);
+                    ICO_AOPEnableAttribute ia = (ICO_AOPEnableAttribute) iType.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false);
+
+                    if ( ia.AOPEnable )
+                    {
+                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        Type type = generator.GenerateType();
+                        DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
+                    }
+                    else
+                    {
+                       
+                        DependencyUnityContainer.Current.RegisterType(iType, t, ds.Description, new TransientLifetimeManager());
+                    }
                 }
             }
 
@@ -276,7 +336,9 @@ namespace Complex.ICO.Utility.Factory
             }
         }
     }
-
+    /// <summary>
+    /// WebApi 接口注册方式
+    /// </summary>
     public class IoCContainer : System.Web.Http.Dependencies.IDependencyResolver
     {
 

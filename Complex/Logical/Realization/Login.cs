@@ -8,10 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+ 
+using Complex.ICO_AOP;
+ 
 
 namespace Complex.Logical.Realization
 {
-    [Description("Login")]
+    [ICOConfig("Login",true)]
     public class Login : EFRepositoryBase<test2>, ILogin
     {
         public Login() {
@@ -29,19 +32,28 @@ namespace Complex.Logical.Realization
 
         #region ILogin 成员
 
-
-         [Start1]
-        [Ex]
+        
+        [Start1]
+       // [Ex]
         public bool IsLogin(test2 model, int aa, decimal bb, object cc, float aaa)
      //   public bool IsLogin(test2 model, int aa)
         {
+
+
+            
             Insert(model);
 
-            throw new ArgumentOutOfRangeException("不存在的月份"); 
-            var quer = EF.test2.AsNoTracking().ToList();
+      
+            var quer = EF.test2.AsNoTracking().OrderByDescending(p=>p.ID).ToList();
+          // int iii= quer.RemoveAll(p=>p.ID>0);
+         
+            
+        //   EF.SaveChanges();
             //Update(model);
             ii = aa;
            // Insert(model);
+             throw new ArgumentOutOfRangeException("不存在的月份"); 
+ 
             return false;
         }
 

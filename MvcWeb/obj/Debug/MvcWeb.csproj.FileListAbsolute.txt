@@ -252,5 +252,3 @@ F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\zh-Hans\System.Web.Web
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\obj\Debug\MvcWeb.csprojResolveAssemblyReference.cache
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\obj\Debug\MvcWeb.dll
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\obj\Debug\MvcWeb.pdb
-F:\快盘\github_repository\Rapid_Project\MvcWeb\bin\Oracle.ManagedDataAccess.dll
-F:\快盘\github_repository\Rapid_Project\MvcWeb\bin\Oracle.ManagedDataAccess.EntityFramework.dll
