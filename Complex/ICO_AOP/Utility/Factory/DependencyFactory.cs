@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Complex.ICO_AOP.Attribute;
  
 
 namespace Complex.ICO_AOP.Utility.Factory
@@ -86,7 +87,7 @@ namespace Complex.ICO_AOP.Utility.Factory
            
 
             var typeList =
-                Assembly.LoadFrom(HttpContext.Current.Server.MapPath("/bin/") + "Complex.dll").GetTypes().Where(t => t.Namespace != null && t.Namespace.Contains("Complex.Logical.Realization") && t.IsInterface == false && t.IsAbstract == false);   
+                Assembly.LoadFrom(HttpContext.Current.Server.MapPath("/bin/") + "Complex.dll").GetTypes().Where(t => t.Namespace != null && t.Namespace.Contains("Realization") && t.IsInterface == false && t.IsAbstract == false);   
             //所有ITransientLifetimeManagerRegister类型    
 
             var ITransientLifetimeManagerRegisterls =
@@ -124,8 +125,9 @@ namespace Complex.ICO_AOP.Utility.Factory
                     ICO_AOPEnableAttribute ia = (ICO_AOPEnableAttribute) iType.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false);
 
                     if ( ia.AOPEnable )
-                    {
-                        var generator = new DynamicProxyGenerator(t, iType,ds.TransactionEnable);
+                    { 
+                         
+                        var generator = new DynamicProxyGenerator(t, iType);
                         Type type = generator.GenerateType();
                         DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
                     }
@@ -150,7 +152,7 @@ namespace Complex.ICO_AOP.Utility.Factory
 
                     if ( ia.AOPEnable )
                     {
-                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        var generator = new DynamicProxyGenerator(t, iType);
                         Type type = generator.GenerateType();
                         DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
                     }
@@ -173,7 +175,7 @@ namespace Complex.ICO_AOP.Utility.Factory
 
                     if ( ia.AOPEnable )
                     {
-                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        var generator = new DynamicProxyGenerator(t, iType);
                         Type type = generator.GenerateType();
                         DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
                     }
@@ -196,7 +198,7 @@ namespace Complex.ICO_AOP.Utility.Factory
 
                     if ( ia.AOPEnable )
                     {
-                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        var generator = new DynamicProxyGenerator(t, iType);
                         Type type = generator.GenerateType();
                         DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
                     }
@@ -218,7 +220,7 @@ namespace Complex.ICO_AOP.Utility.Factory
 
                     if ( ia.AOPEnable )
                     {
-                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        var generator = new DynamicProxyGenerator(t, iType);
                         Type type = generator.GenerateType();
                         DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
                     }
@@ -240,7 +242,7 @@ namespace Complex.ICO_AOP.Utility.Factory
 
                     if ( ia.AOPEnable )
                     {
-                        var generator = new DynamicProxyGenerator(t, iType, ds.TransactionEnable);
+                        var generator = new DynamicProxyGenerator(t, iType);
                         Type type = generator.GenerateType();
                         DependencyUnityContainer.Current.RegisterType(iType, type, ds.Description, new TransientLifetimeManager());
                     }
@@ -279,15 +281,15 @@ namespace Complex.ICO_AOP.Utility.Factory
             }
             try
             {
-                string filepath = HttpContext.Current.Server.MapPath("InfoLog.txt");
+                //string filepath = HttpContext.Current.Server.MapPath("/InfoLog.txt");
 
-                File.AppendAllText(filepath, System.Environment.NewLine); 
-                File.AppendAllText(filepath, string.Format("*****   {0}   ************************* {1}", controllerType.Name, DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")));
-                foreach (var item in controllerType.GetProperties())
-                {
-                    File.AppendAllText(filepath, System.Environment.NewLine);
-                    File.AppendAllText(filepath, item.Name);
-                }
+                //File.AppendAllText(filepath, System.Environment.NewLine); 
+                //File.AppendAllText(filepath, string.Format("*****   {0}   ************************* {1}", controllerType.Name, DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")));
+                //foreach (var item in controllerType.GetProperties())
+                //{
+                //    File.AppendAllText(filepath, System.Environment.NewLine);
+                //    File.AppendAllText(filepath, item.Name);
+                //}
 
           
                 return (IController)DependencyUnityContainer.Current.Resolve(controllerType);

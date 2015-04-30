@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Web;
+using Complex.ICO_AOP.Attribute;
 
 
 namespace MtAop.Factory
@@ -36,18 +37,18 @@ namespace MtAop.Factory
         /// <summary>
         /// 是否开启事务
         /// </summary>
-        bool TransactionEnable;
+       // bool TransactionEnable;
         /// <summary>
         /// 构造
         /// </summary>
         /// <param name="realProxyType"></param>
         /// <param name="interfaceType"></param>
-        public DynamicProxyGenerator(Type realProxyType, Type interfaceType, bool transactionEnable = false)
+        public DynamicProxyGenerator(Type realProxyType, Type interfaceType)
         {
             _realProxyType = realProxyType;
             _interfaceType = interfaceType;
 
-            TransactionEnable = transactionEnable;
+           // TransactionEnable = transactionEnable;
           //  if ( baseType != null )
                // this._baseType = baseType; 
         }
@@ -181,9 +182,10 @@ namespace MtAop.Factory
 
 
             #region 事务实例化
+         //      ICO_AOPEnableAttribute ia = (ICO_AOPEnableAttribute) iType.GetCustomAttribute(typeof(ICO_AOPEnableAttribute), false);
+            AOPTransactionAttribute AOPConfig = (AOPTransactionAttribute) methodInfo.GetCustomAttribute(typeof(AOPTransactionAttribute), false);
 
-
-            if ( TransactionEnable )
+            if ( AOPConfig != null && AOPConfig.TransactionEnable && _realProxyType.BaseType != null && _realProxyType.BaseType.Name.Contains( "EFRepositoryBase") ) 
             {
                   generator.Emit(OpCodes.Ldarg_0);
                   generator.Emit(OpCodes.Ldfld, _realProxyField);
@@ -233,8 +235,24 @@ namespace MtAop.Factory
             generator.Emit(OpCodes.Ldloc, contextLocal);
             generator.Emit(OpCodes.Ldstr, methodName);
             generator.Emit(OpCodes.Call, contextType.GetMethod("SetMethod", BindingFlags.Public | BindingFlags.Instance));
+           
+            
+            //设置类名
+            generator.Emit(OpCodes.Ldloc, contextLocal);
+            generator.Emit(OpCodes.Ldstr, _realProxyType.FullName);
+            generator.Emit(OpCodes.Call, contextType.GetMethod("SetClassName", BindingFlags.Public | BindingFlags.Instance));
 
+            //设置返回类型 
+            generator.Emit(OpCodes.Ldloc, contextLocal);
+            generator.Emit(OpCodes.Ldtoken, methodInfo.ReturnType);
+            generator.Emit(OpCodes.Call, typeof(System.Type).GetMethod("GetTypeFromHandle", new Type[] { typeof(System.RuntimeTypeHandle) }));
+            PropertyInfo ResultType = contextType.GetProperty("ResultType");
+            generator.Emit(OpCodes.Callvirt, ResultType.SetMethod);
+   
             #endregion
+
+
+
 
             #region 声明  result 初始化
 
@@ -279,8 +297,15 @@ namespace MtAop.Factory
                 {
                     generator.Emit(OpCodes.Box, parameterInfos[i - 1].ParameterType);
                 }
+#warning out 参数作为指针传送无法中途拦截赋值 必须在方法中实现赋值目前有没有找到有效解决方案
+                //if ( parameterInfos[i - 1].ParameterType.Name.Contains("&") )
+                //{
+                //    generator.Emit(OpCodes.Box, Type.GetType( parameterInfos[i - 1].ParameterType.FullName.Replace("&","")));
+                //    generator.Emit(OpCodes.Unbox, Type.GetType(parameterInfos[i - 1].ParameterType.FullName.Replace("&", "")));
+                //}
                 generator.Emit(OpCodes.Call, contextType.GetMethod("SetParameter", BindingFlags.Public | BindingFlags.Instance));
             }
+
             #endregion
 
             /*
@@ -384,50 +409,18 @@ namespace MtAop.Factory
             generator.Emit(OpCodes.Ldfld, _realProxyField);
             for (int i = 1; i <= parameterInfos.Length; i++)
             {
-               // generator.Emit(OpCodes.Ldarg, i);
-
-                //generator.Emit(OpCodes.Ldloc, contextLocal);
-                //generator.Emit(OpCodes.Callvirt, contextType.GetProperty("Parameters").GetMethod);
-                //generator.Emit(OpCodes.Ldc_I4, i - 1);
-                //generator.Emit(OpCodes.Ldelem_Ref);
-
+             
                 generator.Emit(OpCodes.Ldloc, contextLocal);
                 generator.Emit(OpCodes.Callvirt, contextType.GetProperty("Parameters").GetMethod);
                 generator.Emit(OpCodes.Ldc_I4, i - 1);
                 generator.Emit(OpCodes.Callvirt, typeof(List<object>).GetMethod("get_Item"));
-
-                generator.Emit(OpCodes.Unbox_Any, parameterInfos[i-1].ParameterType);
-
-                  //  generator.Emit(OpCodes.Unbox);
-                   // 
-                
-               // generator.Emit(OpCodes.Unbox_Any, typeof(List<object>));
-               // generator.Emit(OpCodes.Ldelem_Ref);
-
-            //    System.Collections.Generic.List`1<object>
-
-                //if ( i!=2 )
-                //{
-                //    generator.Emit(OpCodes.Ldloc, contextLocal);
-                //    generator.Emit(OpCodes.Callvirt, contextType.GetProperty("Parameters").GetMethod);
-                //    generator.Emit(OpCodes.Ldc_I4, i - 1);
-                //    generator.Emit(OpCodes.Ldelem_Ref);
-                //}
-                //else
-                //{
-                    //generator.Emit(OpCodes.Ldloc, contextLocal);
-                    //generator.Emit(OpCodes.Callvirt, contextType.GetProperty("Parameters").GetMethod);
-                    //generator.Emit(OpCodes.Ldc_I4, i - 1);
-                    //generator.Emit(OpCodes.Ldelem,typeof(int));
-                 
-
-                //}
-               
-               // contextLocal.
-                //  contextType.GetProperty("Parameters").GetMethod;
+                if ( parameterInfos[i - 1].ParameterType.IsValueType )
+                {
+                    generator.Emit(OpCodes.Unbox_Any, parameterInfos[i - 1].ParameterType);
+                }
+              
             }
-            //  result = this._realProxy.Add(num1, num2); 
-       //     methodInfo.GetParameters().GetType()
+     
             Type[] parameterInfostypes = new Type[parameterInfos.Length];
             for (int i = 0; i < parameterInfos.Length; i++)
             {
@@ -488,8 +481,30 @@ namespace MtAop.Factory
             generator.Emit(OpCodes.Callvirt, typeof(AspectAttribute).GetMethod("Action", new Type[] { typeof(InvokeContext) }));
             generator.Emit(OpCodes.Stloc, contextLocal);
 
-            generator.MarkLabel(castPostSuccess);
+            //获取拦截的返回值
 
+
+  //            IL_0021:  ldloc.1
+  //IL_0022:  callvirt   instance object MtAop.Context.InvokeContext::get_Result()
+  //IL_0027:  call       valuetype [mscorlib]System.Decimal [mscorlib]System.Convert::ToDecimal(object)
+
+            MethodInfo convertMethodInfo = typeof(System.Convert).GetMethod("To" + methodInfo.ReturnType.Name, new Type[] { typeof(object) });
+
+            generator.Emit(OpCodes.Ldloc, contextLocal);
+            PropertyInfo Result = contextType.GetProperty("Result");
+            generator.Emit(OpCodes.Callvirt, Result.GetMethod); 
+            generator.Emit(OpCodes.Call, convertMethodInfo);
+            generator.Emit(OpCodes.Stloc, resultLocal);
+
+
+            generator.MarkLabel(castPostSuccess);
+            if ( AOPConfig != null && AOPConfig.TransactionEnable && _realProxyType.BaseType != null && _realProxyType.BaseType.Name.Contains("EFRepositoryBase") ) 
+            {
+                generator.Emit(OpCodes.Ldarg_0);
+                generator.Emit(OpCodes.Ldfld, _realProxyField);
+                MethodInfo openTransaction = this._realProxyType.GetMethod("Commit", new Type[] { }, null);
+                generator.Emit(OpCodes.Callvirt, openTransaction);
+            }
             #endregion
 
             #region Catch Block 出现异常处理块
@@ -497,7 +512,8 @@ namespace MtAop.Factory
             generator.BeginCatchBlock(typeof(Exception));
 
 
-            if ( TransactionEnable )
+
+            if ( AOPConfig != null && AOPConfig.TransactionEnable && _realProxyType.BaseType != null && _realProxyType.BaseType.Name.Contains("EFRepositoryBase") ) 
             {
                 generator.Emit(OpCodes.Ldarg_0);
                 generator.Emit(OpCodes.Ldfld, _realProxyField);
@@ -543,15 +559,16 @@ namespace MtAop.Factory
             generator.Emit(OpCodes.Ldloc, contextLocal);
             generator.Emit(OpCodes.Callvirt, typeof(AspectAttribute).GetMethod("Action", new Type[] { typeof(InvokeContext) }));
             generator.Emit(OpCodes.Stloc, contextLocal);
+            //获取拦截的返回值
+            generator.Emit(OpCodes.Ldloc, contextLocal);
+            // PropertyInfo ResultType = contextType.GetProperty("ResultType");
+            generator.Emit(OpCodes.Callvirt, Result.GetMethod);
+            generator.Emit(OpCodes.Call, convertMethodInfo);
+            generator.Emit(OpCodes.Stloc, resultLocal);
 
         
-            generator.Emit(OpCodes.Leave_S, castRetSuccess);
-
-            generator.MarkLabel(castExSuccess);
-
-      
-
-
+            generator.Emit(OpCodes.Leave_S, castRetSuccess); 
+            generator.MarkLabel(castExSuccess); 
             generator.Emit(OpCodes.Ldloc, exceptionLocal);
             generator.Emit(OpCodes.Throw);
 
@@ -573,13 +590,7 @@ namespace MtAop.Factory
             //    generator.Emit(OpCodes.Callvirt, commitTransaction);
             //}
 
-            if ( TransactionEnable )
-            {
-                generator.Emit(OpCodes.Ldarg_0);
-                generator.Emit(OpCodes.Ldfld, _realProxyField);
-                MethodInfo openTransaction = this._realProxyType.GetMethod("Commit", new Type[] { }, null);
-                generator.Emit(OpCodes.Callvirt, openTransaction);  
-            }
+           
 
             if (typeof(void) != returnType)
             {

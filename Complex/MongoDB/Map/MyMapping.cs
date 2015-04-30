@@ -15,7 +15,13 @@ namespace Complex.Mongodb.Map
         public void Mapping(MappingStoreBuilder mapping)
         {
 
+
+          
+
+
             mapping.Map<Log>();
+            
+            mapping.DefaultProfile(p=>p.SubClassesAre(t=>t.IsSubclassOf(typeof(Log))));
             //mapping.Map<SubClass>();
             //mapping.DefaultProfile(profile =>
             //{

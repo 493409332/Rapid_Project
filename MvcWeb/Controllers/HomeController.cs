@@ -16,16 +16,17 @@ namespace MvcWeb.Controllers
         //
         // GET: /Home/
         [Dependency("Login")]
-        public ILogin Login { get; set; }
+        public ITest2 Login { get; set; }
 
         [Dependency("Login1")]
-        public ILogin Login1 { get; set; }
+        public ITest2 Login1 { get; set; }
   //      public ILogin Login2 = DependencyUnityContainer.Current.Resolve<ILogin>("Login1");
 
       //  DependencyUnityContainer
         public ActionResult Index()
         {
-          bool aaa11 = Login.IsLogin(new test2() { ID = 1, Name = "aaaaaaa", Num = 1, test3 = new test3() { Name1 = "aaaaaaaaaa", Num1 = 1 } }, 11, 1.11m, 111, 1.1123f);
+            object aa = HttpContext.Items["123"];
+          //  decimal aaa11 = Login.IsLogin(new test2() { ID = 1, Name = "aaaaaaa", Num = 1, test3 = new test3() { Name1 = "aaaaaaaaaa", Num1 = 1 } }, 11, 1.11m, 111, 1.1123f);
           //  bool aa = Login.IsLogin(new test2() { ID = 1, Name = "12", Num = 1, test3 = new test3() { Name1 = "123", Num1 = 1 } }, 212);
        //     bool aa1 = Login1.IsLogin(new test2());
 

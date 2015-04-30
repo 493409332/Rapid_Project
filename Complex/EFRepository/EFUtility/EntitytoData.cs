@@ -6,12 +6,13 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Complex.Entity.Admin;
 
 namespace Complex.Repository.Utility
 {
     public class EntitytoData : DbContext
     {
-        public EntitytoData() : base("OraString") { }
+        public EntitytoData() : base("MySQLContext") { }
         public EntitytoData(string p):base(p){ }
         public static EntitytoData Init(string connectionstring)
         {
@@ -50,8 +51,10 @@ namespace Complex.Repository.Utility
         //public DbSet<T_Contradiction_Detailed> T_Contradiction_Detailed { get; set; }
         //public DbSet<T_Contradiction_TypeDepartment> T_Contradiction_TypeDepartment { get; set; }
         //public DbSet<T_Contradiction_Step> T_Contradiction_Step { get; set; }
-        //public DbSet<T_UserOrDepartment> T_UserOrDepartment { get; set; }
+        //public DbSet<Complex.Entity.test1.Class1> Class1 { get; set; }
         public DbSet<test2> test2 { get; set; }
+        public DbSet<T_Button> T_Button { get; set; }
+
         //public DbSet<TestCase> TestCase { get; set; }
         //public DbSet<T_Department> T_Department { get; set; }
    

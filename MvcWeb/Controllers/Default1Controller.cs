@@ -18,11 +18,11 @@ namespace MvcWeb.Controllers
             return new string[] { "value1", "value2" };
         }
         [Dependency("Login")]
-        public ILogin Login { get; set; }
+        public ITest2 Login { get; set; }
         // GET api/default1/5
         public string Get(int id)
         {
-            bool aaa11 = Login.IsLogin(new test2() { ID = 1, Name = "aaaaaaa", Num = 1, test3 = new test3() { Name1 = "aaaaaaaaaa", Num1 = 1 } }, 11, 1.11m, 111, 1.1123f);
+            decimal aaa11 = Login.IsLogin(new test2() { ID = 1, Name = "aaaaaaa", Num = 1, test3 = new test3() { Name1 = "aaaaaaaaaa", Num1 = 1 } }, 11, 1.11m, 111, 1.1123f);
             return "value";
         }
 

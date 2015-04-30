@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Complex.ICO_AOP
+namespace Complex.ICO_AOP.Attribute
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public class ICOConfigAttribute : System.Attribute
@@ -14,16 +14,16 @@ namespace Complex.ICO_AOP
        /// </summary>
        /// <param name="description"></param>
        /// <param name="baseType"></param>
-        public ICOConfigAttribute(string description, bool transactionEnable = false)
+        public ICOConfigAttribute(string description )
         { 
             this.Description = description;
-            TransactionEnable = transactionEnable;
+          //  TransactionEnable = transactionEnable;
         }
 
-        /// <summary>
-        /// 父类类型
-        /// </summary>
-        public bool TransactionEnable { get; set; }
+        ///// <summary>
+        ///// 父类类型 开启需要继承 EFRepositoryBase
+        ///// </summary>
+        //public bool TransactionEnable { get; set; }
 
 
 

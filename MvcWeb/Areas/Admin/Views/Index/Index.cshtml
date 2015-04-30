@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@section scripts{
+    <script src="/Scripts/avalon/avalon.js" type="text/javascript" data-main="/Areas/Admin/Views/Index/main.js"></script>
+
+}
+ 
+ 
+<style> 
+    .ms-controller {
+        display: none;
+    }
+    .nobarbg .oni-scrollbar {
+ background: transparent;
+   }
+</style>
+ 
+<div ms-controller="Index" ms-css-height="clientHeight" ms-css-width="clientWidth" class="ms-controller">
+    <div ms-widget="layout,layoutVM1,$layoutVMOptions" style="border: none">
+           <div ms-layout-dock="north" style="background-color:#0094ff" >
+           @* {{northRegion.htmltxt|html}}*@
+       <h1 ms-click="TestClick">疯狂的面条框架</h1>  
+        </div>
+        <div ms-layout-dock="south" style="background-color:#0094ff">
+         @*   south 南 直接改变Layout的大小时，各区域会按照百分比配置重新计算。但是经过拖放改变区域尺寸后，该区域配置的百分比失效并被实际尺寸覆盖。*@
+            页脚
+        </div>
+        <div ms-layout-dock="west"> 
+
+            <div ms-widget="scrollbar,scrollbarVM,$scrollbar" class="oni-helper-reset" style="height: 100%;  width: 100%;" data-scrollbar-position="right" ms-click="scrollbarupdate">
+                <div class="oni-scrollbar-scroller oni-helper-reset">
+                    <div ms-widget="tree,tree2,$treeopts" class="menu-tree" style="height: 100%; ">
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*     <div ms-layout-dock="east">
+              east  东区配置尺寸为{{eastRegion.size}}。
+            </div>*@
+        <div ms-layout-dock="centre">
+                @*   centre 直接改变Layout的大小时，各区域会按照百分比配置重新计算。但是经过拖放改变区域尺寸后，该区域配置的百分比失效并被实际尺寸覆盖。*@
+
+            <div ms-widget="tab,tabVM,$tabopts" style="width:800px;" data-tab-removable="true"></div>
+
+@*            <div ms-widget="testui,ddd,$opts" ms-css-height="aaa">
+         
+                <input ms-duplex="value" />
+                {{aaa}}
+                <button type="button" ms-click="plus">ClickMe</button>
+            </div>
+
+
+
+            <div ms-widget="panel,panlvm1,$panelopts">
+            </div>*@
+
+          
+
+
+
+        </div>
+
+    </div>
+
+</div>

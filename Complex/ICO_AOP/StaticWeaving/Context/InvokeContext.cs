@@ -1,4 +1,4 @@
-﻿using MtAop.Metadata;
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,11 +54,11 @@ namespace MtAop.Context
                 return null;
             }
         }
-        MethodMetadata _method;
+        string _method;
         /// <summary>
         /// 方法元数据
         /// </summary>
-        public MethodMetadata Method
+        public string MethodName
         {
             get
             {
@@ -66,31 +66,49 @@ namespace MtAop.Context
                 return _method;
             }
         }
+        string _className;
+        /// <summary>
+        /// 方法元数据
+        /// </summary>
+        public string ClassFullName
+        {
+            get
+            {
 
-        ResultMetadata _result;
+                return _className;
+            }
+        }
+        object _result;
         /// <summary>
         /// 返回元数据
         /// </summary>
-        public ResultMetadata Result
+        public object Result
         {
+             set
+            {
+                  _result=value;
+            }
             get
             {
                 return _result;
             }
         }
 
-        ExceptionMetadata _ex;
+        Exception _ex;
         /// <summary>
         /// 异常元数据
         /// </summary>
-        public ExceptionMetadata Ex
+        public Exception Ex
         {
             get
             {
                 return _ex;
             }
         }
-
+        /// <summary>
+        /// 返回值类型
+        /// </summary>
+        public Type ResultType { get; set; }
 
         /// <summary>
         /// 添加参数元数据
@@ -106,7 +124,7 @@ namespace MtAop.Context
         /// <param name="e"></param>
         public void SetError(Exception e)
         {
-            _ex = new ExceptionMetadata(e);
+            _ex = e;
         }
         /// <summary>
         /// 添加返回元数据
@@ -114,7 +132,7 @@ namespace MtAop.Context
         /// <param name="result"></param>
         public void SetResult(object result)
         {
-            _result = new ResultMetadata(result);
+            _result = result;
         }
         /// <summary>
         /// 添加方法元数据
@@ -122,8 +140,18 @@ namespace MtAop.Context
         /// <param name="methodName"></param>
         public void SetMethod(string methodName)
         {
-            _method = new MethodMetadata(methodName);
+            _method =  methodName;
         }
+      /// <summary>
+        /// 添加方法元数据
+        /// </summary>
+        /// <param name="methodName"></param>
+        public void SetClassName(string className)
+        {
+            _className = className;
+        }
+
+         
 
     }
 }
