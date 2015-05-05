@@ -83,7 +83,7 @@ define(["avalon","text!./avalon.tab.html", "text!./avalon.tab.panels.html", "tex
         }
 
         var vmodel = avalon.define(data["tabId"], function(vm) {
-            vm.$skipArray = [/*"disable", "enable", "add", "activate", "remove", "getTemplate", */"widgetElement", "callInit"/*, "onActivate", "onAjaxCallback"*/, "rootElement"]
+            vm.$skipArray = [/*"disable", "enable", "add", "activate", "remove", "getTemplate", */"widgetElement", "callInit"/*, "onActivate", "onAjaxCallback"*/]
 
 
             vm.tabs = []
@@ -91,7 +91,6 @@ define(["avalon","text!./avalon.tab.html", "text!./avalon.tab.panels.html", "tex
 
             avalon.mix(vm, options)
             vm.widgetElement = element
-            vm.rootElement = element
            
             var inited
                 , switchTimer
@@ -340,7 +339,7 @@ define(["avalon","text!./avalon.tab.html", "text!./avalon.tab.panels.html", "tex
             vm.selecttabname = function (name)
             {
                 var i;
-                var exists = false;
+                var exists=false;
                 for (i = 0; i < vmodel.tabs.length; i++)
                 {
                     if (typeof (vmodel.tabs[i].name) != "undefined" && vmodel.tabs[i].name != "" && vmodel.tabs[i].name == name)

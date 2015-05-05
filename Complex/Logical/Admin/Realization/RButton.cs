@@ -18,7 +18,19 @@ namespace Complex.Logical.Admin.Realization
             ChangeDatabase("MySQLContext");
         }
         #region IBase<T_Button> 成员
+        public IEnumerable<T_Button> GetPageEnumerable(T_Button model, int page, int rows, string sort, string order, out int total, object where)
+        {
+            var quer = new List<T_Button>();
+            quer.Add(new T_Button());
+            total = 10;
+            return quer;
+        }
+        public List<T_Button> GetPageList(T_Button model, int page, int rows, string sort, string order, out int total, object where)
+        {
+            throw new NotImplementedException();
+        }
 
+       
         [AOPTransaction]
         public int Add(T_Button model)
         {
@@ -50,15 +62,7 @@ namespace Complex.Logical.Admin.Realization
             throw new NotImplementedException();
         }
 
-        public List<T_Button> GetPageList(T_Button model, int page, int rows, string sort, string order, out int total, object where)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T_Button> GetPageEnumerable(T_Button model, int page, int rows, string sort, string order, out int total, object where)
-        {
-            throw new NotImplementedException();
-        }
+      
 
         public List<T_Button> GetAllList(T_Button model, int page, int rows, string sort, string order, out int total)
         {

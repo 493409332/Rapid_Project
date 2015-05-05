@@ -203,6 +203,7 @@
     <Content Include="Scripts\avalon\scrollbar\test.html" />
     <Content Include="Scripts\avalon\tab\avalon.tab.ajax.html" />
     <Content Include="Scripts\avalon\tab\avalon.tab.close.html" />
+    <Content Include="Scripts\avalon\tab\avalon.tab.最新版.css" />
     <Content Include="Scripts\avalon\tab\avalon.tab.css" />
     <Content Include="Scripts\avalon\tab\avalon.tab.doc.html" />
     <Content Include="Scripts\avalon\tab\avalon.tab.ex.html" />

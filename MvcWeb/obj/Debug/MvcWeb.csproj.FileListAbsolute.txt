@@ -301,8 +301,6 @@ F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\System.Web.Razor.dll
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\System.Web.WebPages.Deployment.dll
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\System.Web.WebPages.dll
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\System.Web.WebPages.Razor.dll
-F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\MongoDB.dll
-F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\NPOI.dll
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\Complex.pdb
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\EntityFramework.xml
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\EntityFramework.SqlServer.xml
@@ -321,8 +319,6 @@ F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\System.Web.Razor.xml
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\System.Web.WebPages.xml
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\System.Web.WebPages.Deployment.xml
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\System.Web.WebPages.Razor.xml
-F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\MongoDB.pdb
-F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\MongoDB.xml
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\zh-Hans\EntityFramework.resources.dll
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\zh-Hans\EntityFramework.SqlServer.resources.dll
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\zh-Hans\Microsoft.QualityTools.Testing.Fakes.resources.dll
@@ -339,3 +335,7 @@ F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\zh-Hans\System.Web.Web
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\obj\Debug\MvcWeb.csprojResolveAssemblyReference.cache
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\obj\Debug\MvcWeb.dll
 F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\obj\Debug\MvcWeb.pdb
+F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\MongoDB.dll
+F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\NPOI.dll
+F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\MongoDB.pdb
+F:\快盘\SVN\民政居家养老\Rapid_Project\MvcWeb\bin\MongoDB.xml

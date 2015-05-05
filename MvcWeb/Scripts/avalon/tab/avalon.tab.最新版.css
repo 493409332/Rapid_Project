@@ -10,10 +10,7 @@ div.oni-tab {
   /*dir=v, normal size*/ }
   .oni-tab-slider {
     position: relative;
-    overflow: hidden;
-
-      background-color: #f8f8f8;
-  }
+    overflow: hidden; }
     .oni-tab-slider-enable {
       width: 10000px; }
     .oni-tab-slider-button {
@@ -31,26 +28,18 @@ div.oni-tab {
   .oni-tab .oni-tab-nav {
     float: left; }
   .oni-tab .oni-tab-nav .oni-state-default {
-      margin-top:2px;
     float: left;
     display: inline;
     list-style: none;
     text-align: center;
     font-size: 12px;
-    padding: 8px 25px 8px 10px;
+    padding: 10px 20px;
     position: relative;
     background-color: #f8f8f8;
     cursor: pointer;
     border: 1px solid #d4d4d4;
     border-right-width: 0;
-    color: black; 
-
-    -moz-border-top-left-radius: 8px;      /* Gecko browsers */
-    -webkit-border-top-right-radius: 8px;   /* Webkit browsers */
-    border-top-left-radius:8px;    
-    border-top-right-radius:8px;        
-    
-  }
+    color: black; }
   .oni-tab .oni-tab-nav .oni-state-default a, .oni-tab .oni-tab-nav .oni-state-default:link, .oni-tab .oni-tab-nav .oni-state-default a:hover {
     color: black;
     text-decoration: none;
@@ -110,13 +99,14 @@ div.oni-tab {
     padding-right: 30px; }
   .oni-tab-nav .oni-tab-item .oni-tab-close {
     position: absolute;
-    right: 1px;
-    top: 9px;
-   
-   
+    right: 0px;
+    top: 7px;
+    padding: 3px;
+    height: 12px;
+    width: 12px;
     overflow: hidden;
     border: 1px solid #f8f8f8;
-    
+    border-right-width: 0;
     color: #666666;
     text-indent: 0;
     line-height: 14px;

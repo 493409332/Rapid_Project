@@ -488,12 +488,38 @@ namespace MtAop.Factory
   //IL_0022:  callvirt   instance object MtAop.Context.InvokeContext::get_Result()
   //IL_0027:  call       valuetype [mscorlib]System.Decimal [mscorlib]System.Convert::ToDecimal(object)
 
-            MethodInfo convertMethodInfo = typeof(System.Convert).GetMethod("To" + methodInfo.ReturnType.Name, new Type[] { typeof(object) });
+            MethodInfo convertMethodInfo=null;
+            Type convertType = null;
+        
+
+#warning 泛型返回值未处理
+            if ( methodInfo.ReturnType.IsGenericType && methodInfo.ReturnType.IsInterface )
+            {
+                convertType = typeof(List<>).MakeGenericType(methodInfo.ReturnType.GetGenericArguments());  
+            }
+            else if ( methodInfo.ReturnType.IsGenericType && !methodInfo.ReturnType.IsInterface )
+            {
+                convertType = methodInfo.ReturnType;
+            }
+            else
+            {
+                convertMethodInfo = typeof(System.Convert).GetMethod("To" + methodInfo.ReturnType.Name, new Type[] { typeof(object) });
+            }
 
             generator.Emit(OpCodes.Ldloc, contextLocal);
             PropertyInfo Result = contextType.GetProperty("Result");
-            generator.Emit(OpCodes.Callvirt, Result.GetMethod); 
-            generator.Emit(OpCodes.Call, convertMethodInfo);
+            generator.Emit(OpCodes.Callvirt, Result.GetMethod);
+
+
+            if ( methodInfo.ReturnType.IsGenericType )
+            {
+                generator.Emit(OpCodes.Castclass, convertType);
+            }
+            else
+            {
+                generator.Emit(OpCodes.Call, convertMethodInfo);
+            }
+        
             generator.Emit(OpCodes.Stloc, resultLocal);
 
 
@@ -563,7 +589,16 @@ namespace MtAop.Factory
             generator.Emit(OpCodes.Ldloc, contextLocal);
             // PropertyInfo ResultType = contextType.GetProperty("ResultType");
             generator.Emit(OpCodes.Callvirt, Result.GetMethod);
-            generator.Emit(OpCodes.Call, convertMethodInfo);
+
+            if ( methodInfo.ReturnType.IsGenericType )
+            {
+                generator.Emit(OpCodes.Castclass, convertType);
+            }
+            else
+            {
+                generator.Emit(OpCodes.Call, convertMethodInfo);
+            }
+           
             generator.Emit(OpCodes.Stloc, resultLocal);
 
         

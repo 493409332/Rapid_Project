@@ -11,14 +11,12 @@ namespace Complex
     {
         public decimal aa()
         {
-            decimal aaa;
-           // aaa = Convert.ToDecimal(11111);
+            decimal aaa=0;
 
-            InvokeContext context = new InvokeContext();
-            context.Result = 1111111.1111M;
 
-            aaa =Convert.ToDecimal(context.Result);
 
+            IEnumerable<Class1> aaaa = new List<Class1>();
+            List<Class1> bbbb = (List<Class1>) aaaa;
             return aaa;
         }
     }

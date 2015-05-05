@@ -1,7 +1,9 @@
 .menu-tree {
   width: 200px;
   position: relative;
-  box-shadow: 1px 1px 1px 1px #dadada; }
+  /*box-shadow:  1px 1px 1px 1px #dadada;*/
+
+}
   .menu-tree .oni-tree {
     padding: 0;
     border-top: 1px solid #dadada; }
