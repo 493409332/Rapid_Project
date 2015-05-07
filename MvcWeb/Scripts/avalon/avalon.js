@@ -5275,6 +5275,10 @@ new function () {// jshint ignore:line
         js: {
             load: function (name, req, onLoad) {
                 var url = req.url
+                if (req.url.indexOf("~") > -1)
+                {
+                    url = req.baseUrl + req.url.substr(req.url.indexOf("~")+2, req.url.length - req.url.indexOf("~")+2);
+                }
                 var id = req.urlNoQuery
                 var shim = kernel.shim[name.replace(rjsext, "")]
                 if (shim) { //shim机制

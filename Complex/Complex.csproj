@@ -175,7 +175,7 @@
     <Compile Include="Common\Utility\Validate\ValidationHelper.cs" />
     <Compile Include="Common\Utility\WebUtil.cs" />
     <Compile Include="Common\WordTool\WordPlayer.cs" />
-    <Compile Include="Entity\Admin\BaseModel\AdminBase.cs" />
+    <Compile Include="Entity\Admin\AdminBase.cs" />
     <Compile Include="Entity\Admin\ConfigModel.cs" />
     <Compile Include="Entity\Admin\T_Navigation.cs" />
     <Compile Include="Entity\Admin\T_Button.cs" />

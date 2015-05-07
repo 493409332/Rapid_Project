@@ -497,7 +497,8 @@ namespace MtAop.Factory
             {
                 convertType = typeof(List<>).MakeGenericType(methodInfo.ReturnType.GetGenericArguments());  
             }
-            else if ( methodInfo.ReturnType.IsGenericType && !methodInfo.ReturnType.IsInterface )
+            //else if ( ( methodInfo.ReturnType.IsGenericType && !methodInfo.ReturnType.IsInterface ) || methodInfo.ReturnType.IsClass ||)
+            else if ( !methodInfo.ReturnType.IsValueType )
             {
                 convertType = methodInfo.ReturnType;
             }
@@ -505,13 +506,14 @@ namespace MtAop.Factory
             {
                 convertMethodInfo = typeof(System.Convert).GetMethod("To" + methodInfo.ReturnType.Name, new Type[] { typeof(object) });
             }
+         // methodInfo.ReturnType.IsValueType
 
             generator.Emit(OpCodes.Ldloc, contextLocal);
             PropertyInfo Result = contextType.GetProperty("Result");
             generator.Emit(OpCodes.Callvirt, Result.GetMethod);
 
 
-            if ( methodInfo.ReturnType.IsGenericType )
+            if ( !methodInfo.ReturnType.IsValueType )
             {
                 generator.Emit(OpCodes.Castclass, convertType);
             }
@@ -590,7 +592,7 @@ namespace MtAop.Factory
             // PropertyInfo ResultType = contextType.GetProperty("ResultType");
             generator.Emit(OpCodes.Callvirt, Result.GetMethod);
 
-            if ( methodInfo.ReturnType.IsGenericType )
+            if ( !methodInfo.ReturnType.IsValueType )
             {
                 generator.Emit(OpCodes.Castclass, convertType);
             }

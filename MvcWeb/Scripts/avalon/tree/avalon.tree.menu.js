@@ -25,12 +25,10 @@ define(["./avalon.tree", "css!./tree-menu.css"], function () {
 	    // 插入关闭展开按钮
 	    getTemplate: function(tpl, options, name) {
 	        if(name === "nodes") return tpl.replace("<li", "<li ms-class=\"oni-leaf-selected:hasClassSelect(leaf)\" ")
-	        if (!name) return tpl + '<a href="#" class="oni-menu-tree-swicth" ms-click="toggleMenuTree($event, widgetElement, $guid,getid)" ms-class="oni-menu-tree-swicth-off:!toggle"></a>'
+	        if(!name) return tpl + '<a href="#" class="oni-menu-tree-swicth" ms-click="toggleMenuTree($event, widgetElement, $guid)" ms-class="oni-menu-tree-swicth-off:!toggle"></a>'
 	        return tpl
 	    },
-	    toggleMenuTree: function (event, widgetElement, $guid, vmmodelid)
-	    {
-	      
+	    toggleMenuTree: function(event, widgetElement, $guid) {
 	        event && event.preventDefault && event.preventDefault()
 	        var ele = avalon(widgetElement)
 	        if(ele.hasClass("oni-menu-tree-hidden")) {
@@ -39,7 +37,16 @@ define(["./avalon.tree", "css!./tree-menu.css"], function () {
 	        } else {
 	            ele.addClass("oni-menu-tree-hidden")
 	        }
-	        avalon.vmodels[vmmodelid].toggleMenuTreeBack();
+	        var avalonvms = avalon.vmodels;
+	        for (vm in avalonvms)
+	        {
+	            if (typeof (avalonvms[vm].$guid) != "undefined" && avalonvms[vm].$guid != "" && avalonvms[vm].$guid == $guid)
+	            {
+	                avalonvms[vm].toggleMenuTreeBack(avalonvms[vm]);
+	            }
+	        }
+	   
+	       
 	    },
 	    onInit: function(vmodel) {
 	        var ele = avalon(this)
@@ -49,8 +56,7 @@ define(["./avalon.tree", "css!./tree-menu.css"], function () {
 	        ele.bind("mouseleave", function(e) {
 	            ele.removeClass("oni-state-hover")
 	        })
-	    },
-	    toggleMenuTreeBack: function () {alert(1) }
+	    }, toggleMenuTreeBack: function (vm) { alert(1) }
 
 	}
 })

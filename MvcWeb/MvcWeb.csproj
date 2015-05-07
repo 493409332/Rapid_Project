@@ -177,6 +177,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Areas\Admin\Views\Index\test.js" />
     <Content Include="Areas\Admin\Views\Index\test1.js" />
+    <Content Include="Areas\Admin\Views\Index\utility.js" />
     <Content Include="Scripts\avalon\avalon.js" />
     <Content Include="Scripts\avalon\chameleon\compass\css3\PIE.htc" />
     <Content Include="Scripts\avalon\chameleon\compass\tools\text\xml\ellipsis.xml" />
@@ -236,8 +237,10 @@
     <Content Include="Scripts\avalon\tree\avalon.tree.ex5.html" />
     <Content Include="Scripts\avalon\tree\avalon.tree.html" />
     <Content Include="Scripts\avalon\tree\avalon.tree.js" />
-    <Content Include="Scripts\avalon\tree\avalon.tree.leaf.html" />
     <Content Include="Scripts\avalon\tree\avalon.tree.menu.js" />
+    <Content Include="Scripts\avalon\tree\avalon.tree1.js" />
+    <Content Include="Scripts\avalon\tree\avalon.tree.leaf.html" />
+    <Content Include="Scripts\avalon\tree\avalon.tree.menu1.js" />
     <Content Include="Scripts\avalon\tree\avalon.tree.nodes.html" />
     <Content Include="Scripts\avalon\tree\avalon.tree.parent.html" />
     <Content Include="Scripts\avalon\tree\tree-menu.css" />

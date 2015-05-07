@@ -245,7 +245,7 @@ define(["avalon","text!./avalon.tab.html", "text!./avalon.tab.panels.html", "tex
                 })
                 vm.tabs.push({
                     title: title,
-                    name: config.name || title,
+                    name: config.name || title,//添加一个name 属性方便根据name 选择选项卡
                     removable: config.removable,
                     disabled: false
                 })
@@ -336,7 +336,7 @@ define(["avalon","text!./avalon.tab.html", "text!./avalon.tab.panels.html", "tex
                     vm.prevEnable = 1
                 }
             }
-            //判断是否存在
+            //判断是否存在,存在则选择对应选项卡
             vm.selecttabname = function (name)
             {
                 var i;
