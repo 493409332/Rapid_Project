@@ -163,3 +163,4 @@ F:\快盘\github_repository\Rapid_Project\Complex\bin\Debug\zh-Hans\System.Web.H
 F:\快盘\github_repository\Rapid_Project\Complex\bin\Debug\zh-Hans\System.Net.Http.Formatting.resources.dll
 F:\快盘\github_repository\Rapid_Project\Complex\obj\Debug\Complex.dll
 F:\快盘\github_repository\Rapid_Project\Complex\obj\Debug\Complex.pdb
+F:\快盘\github_repository\Rapid_Project\Complex\obj\Debug\Complex.csprojResolveAssemblyReference.cache
