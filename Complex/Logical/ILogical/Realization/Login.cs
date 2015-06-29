@@ -19,7 +19,7 @@ namespace Complex.Logical.Realization
     public class Login : EFRepositoryBase<test2>, ITest2
     {
         public Login() {
-            ChangeDatabase("OraString");
+            ChangeDatabase("MySQLServerContext");
         }
         int ii = 1;
         //[Start]
@@ -57,6 +57,21 @@ namespace Complex.Logical.Realization
              throw new ArgumentOutOfRangeException("不存在的月份"); 
  
             return 123.222M;
+        }
+
+        #endregion
+    }
+
+    [ICOConfig("Loginc")]
+    public class Loginc : EFRepositoryBase<test2>, ITest2<test2>
+    {
+
+
+        #region ITest2<test2> 成员
+         [Start1]
+        public decimal IsLogin(test2 model, int aa, decimal bb, object cc, float aaa)
+        {
+            return 100;
         }
 
         #endregion

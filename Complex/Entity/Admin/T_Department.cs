@@ -12,7 +12,7 @@ namespace Complex.Entity.Admin
 
     [Table("T_Department")]
     [Description("部门管理")]
-    public class T_Department : AdminBase
+    public class T_Department : EntityBase
     {
        
     
@@ -29,7 +29,7 @@ namespace Complex.Entity.Admin
 
         [Description("备注")]
         public string Remark { get; set; }
-
+       
         [NotMapped]
         public IEnumerable<T_Department> children
         {
@@ -37,18 +37,18 @@ namespace Complex.Entity.Admin
             set;
         }
 
-         [NotMapped]
-        /// <summary>
-        /// tree 节点状态
-        /// </summary>
-        public string state
-        {
-            get
-            {
-                if ( ParentId == 0 )
-                    return "open";
-                return children.Any() ? "closed" : "open";
-            }
-        }
+        // [NotMapped]
+        ///// <summary>
+        ///// tree 节点状态
+        ///// </summary>
+        //public string state
+        //{
+        //    get
+        //    {
+        //        if ( ParentId == 0 )
+        //            return "open";
+        //        return children.Any() ? "closed" : "open";
+        //    }
+        //}
     }
 }

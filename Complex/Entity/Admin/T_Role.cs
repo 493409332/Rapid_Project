@@ -11,7 +11,7 @@ namespace Complex.Entity.Admin
     
    
     [Description("角色管理")]
-    public class T_Role : AdminBase
+    public class T_Role : EntityBase
     {
           
 
@@ -25,8 +25,7 @@ namespace Complex.Entity.Admin
 
         [Description("是否为默认角色")]
         public int IsDefault { get; set; }
-
-      
+ 
         //public IEnumerable<Navigation> Navigations { get; set; }
 
      

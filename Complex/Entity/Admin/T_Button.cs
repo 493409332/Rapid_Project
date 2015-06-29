@@ -11,7 +11,7 @@ namespace Complex.Entity.Admin
 {
     [Description("操作按钮")]
     [Table("T_Button")]
-    public class T_Button : AdminBase
+    public class T_Button : EntityBase
     { 
         [Description("按钮名称")]
         public string ButtonText { get; set; }
@@ -26,6 +26,9 @@ namespace Complex.Entity.Admin
         [Description("描述")]
         public string Remark { get; set; }
 
+        [Description("是否为系统菜单")]
+        public bool IsSys { get; set; }
+         
         [Description("按钮HTML")]
         public string ButtonHtml
         {
@@ -41,6 +44,7 @@ namespace Complex.Entity.Admin
         //{
         //    return JSONhelper.ToJson(this);
         //}
+
     }
     
 }

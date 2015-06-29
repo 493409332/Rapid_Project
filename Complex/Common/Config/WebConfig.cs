@@ -13,6 +13,15 @@ namespace Complex.Common.Config
     public sealed class WebConfig
     {
 
+        public static string AdminUser
+        {
+            get { return ConfigurationManager.AppSettings["useradmin"]; }
+        }
+
+        public static string IsOpenButton
+        {
+            get { return ConfigurationManager.AppSettings["isopenbut"]; }
+        }
 #if DEBUG
 
         /// <summary>

@@ -11,69 +11,25 @@ using Complex.Repository;
 namespace Complex.Logical.Admin.Realization
 {
     [ICOConfig("RButton")]
-    public class RButton : EFRepositoryBase<T_Button>, IButton
+    public class RButton : RBase<T_Button>, IButton
     {
         public RButton()
-        {
-            ChangeDatabase("MySQLContext");
-        }
-        #region IBase<T_Button> 成员
-        public IEnumerable<T_Button> GetPageEnumerable(T_Button model, int page, int rows, string sort, string order, out int total, object where)
-        {
-            var quer = new List<T_Button>();
-            quer.Add(new T_Button());
-            total = 10;
-            return quer;
-        }
-        public List<T_Button> GetPageList(T_Button model, int page, int rows, string sort, string order, out int total, object where)
-        {
-            throw new NotImplementedException();
+            : base("MySQLServerContext")
+        { 
         }
 
-       
-        [AOPTransaction]
-        public int Add(T_Button model)
+        //public List<T_Button> GetPage(string predicate, int page, int page_size, string order, string asc)
+        //{
+        //  //  return GetAllNoCache().OrderBy(p=>p.ID).Skip(( page - 1 ) * page_size).Take(page_size).ToList();
+           
+        //    return SearchSqLFor_Page<T_Button>("ID>1",2,5,"ID","asc"); 
+        //}
+
+
+        public List<T_Button> GetButtons()
         {
-            return Insert(model);
+            return GetAllNoCache().OrderBy(p => p.ID).ToList();
         }
-
-        public bool AddRteboll(T_Button model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Remove(T_Button model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemoveRteboll(T_Button model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Edit(T_Button model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool EditRteboll(T_Button model)
-        {
-            throw new NotImplementedException();
-        }
-
-      
-
-        public List<T_Button> GetAllList(T_Button model, int page, int rows, string sort, string order, out int total)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T_Button> GetAllEnumerable(T_Button model, int page, int rows, string sort, string order, out int total)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
+        
     }
 }

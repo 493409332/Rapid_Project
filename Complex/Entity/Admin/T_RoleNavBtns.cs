@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Complex.Entity.Admin
 {
-    public class T_RoleNavBtns : AdminBase
+    public class T_RoleNavBtns : EntityBase
     {
         public int RoleID { get; set; }
         public int NavID { get; set; }

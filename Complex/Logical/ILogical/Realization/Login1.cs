@@ -9,13 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
   
 using Complex.ICO_AOP;
-using Complex.ICO_AOP.Attribute; 
+using Complex.ICO_AOP.Attribute;
+using Complex.EFRepository.Repository;
+using Complex.Entity.Admin; 
 
 namespace Complex.Logical.Realization
 {
     //[ICOConfigAttrbute("Login1", typeof(Login1))]
     [ICOConfig("Login1")]
-    public class Login1 : ITest2
+    public class Login1 : EFRepositoryBaseGeneric, ITest2
     {
         int ii = 1;
         Login test = new Login();
@@ -34,6 +36,8 @@ namespace Complex.Logical.Realization
         public decimal IsLogin(test2 model, int aa, decimal bb, object cc, float aaa)
       //  public bool IsLogin(test2 model, int aa)
             {
+                Insert<test2>(model);
+                Insert<T_Button>(new T_Button());
             ii = 2;
 
           

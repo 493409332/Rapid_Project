@@ -13,6 +13,6 @@ namespace Complex.Logical.Admin
     [ICO_AOPEnable(true)]
     public interface IButton : ITransientLifetimeManagerRegister, IBase<T_Button>
     {
-        
+        List<T_Button> GetButtons();
     }
 }

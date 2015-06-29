@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Complex.ICO_AOP.Attribute
 {
+    /// <summary>
+    /// 开始事务
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class AOPTransactionAttribute : System.Attribute
     {

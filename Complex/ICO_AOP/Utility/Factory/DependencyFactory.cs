@@ -138,7 +138,7 @@ namespace Complex.ICO_AOP.Utility.Factory
                   
             
                   
-                    #warning 加个判断是否有AOP切片类特性，有则动态生成否则直接注册
+                   
                 }
             } 
             //注册IContainerControlledLifetimeManagerRegister类型

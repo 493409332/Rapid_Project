@@ -8,10 +8,10 @@ using Complex.Common.Utility;
 
 namespace Complex.Entity.Admin
 {
-  
+
     [Description("系统用户")]
-    public class T_User : AdminBase
-    { 
+    public class T_User : EntityBase
+    {
         [Description("用户名")]
         public string UserName { get; set; }
         [Description("密码")]

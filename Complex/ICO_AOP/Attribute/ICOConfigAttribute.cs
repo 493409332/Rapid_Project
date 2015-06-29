@@ -14,7 +14,7 @@ namespace Complex.ICO_AOP.Attribute
        /// </summary>
        /// <param name="description"></param>
        /// <param name="baseType"></param>
-        public ICOConfigAttribute(string description )
+        public ICOConfigAttribute(string description="" )
         { 
             this.Description = description;
           //  TransactionEnable = transactionEnable;

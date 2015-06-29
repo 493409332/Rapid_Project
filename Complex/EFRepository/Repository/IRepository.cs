@@ -18,7 +18,7 @@ namespace Complex.Repository
         int Insert(IEnumerable<TEntity> entities);
         //更新实体
        int SaveChanges();
-         void Update(TEntity entity);
+         int Update(TEntity entity);
         //key删除
         int DeleteByKey(object id);
         //根据主键获取实体

@@ -19,4 +19,11 @@ namespace Complex.Logical.ILogical
         decimal IsLogin(test2 model, int aa, decimal bb, object cc, float aaa);
       //  bool IsLogin(test2 model, int aa); 
     }
+
+    [ICO_AOPEnable(true)]
+    public interface ITest2<T> : ITransientLifetimeManagerRegister
+    {
+        decimal IsLogin(T model, int aa, decimal bb, object cc, float aaa);
+        //  bool IsLogin(test2 model, int aa); 
+    }
 }

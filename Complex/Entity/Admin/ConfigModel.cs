@@ -11,7 +11,7 @@ namespace Complex.Entity.Admin
     /// <summary>
     /// 用户个性化设置
     /// </summary>
-    public class ConfigModel : AdminBase
+    public class ConfigModel : EntityBase
     {
         /// <summary>
         /// 用户ID
@@ -32,9 +32,10 @@ namespace Complex.Entity.Admin
         /// Grid 每页显示记录数
         /// </summary>
         public int GridRows { get; set; }
+
     }
 
-    public class Theme : AdminBase
+    public class Theme : EntityBase
     { 
         /// <summary>
         /// 主题名称
